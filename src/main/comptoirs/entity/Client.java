@@ -56,4 +56,7 @@ public class Client {
     @ToString.Exclude
     private List<Commande> commandes = new ArrayList<>();
 
+    public AdressePostale getAdresse() {
+        return adresse;
+    }
 }

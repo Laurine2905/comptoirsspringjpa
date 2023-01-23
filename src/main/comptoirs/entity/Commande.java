@@ -59,4 +59,15 @@ public class Commande {
 	@NonNull
 	private Client client;
 
+	public LocalDate getEnvoyeele() {
+		return envoyeele;
+	}
+
+	public void setEnvoyeele(LocalDate envoyeele) {
+		this.envoyeele = envoyeele;
+	}
+
+	public List<Ligne> getLignes() {
+		return lignes;
+	}
 }

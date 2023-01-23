@@ -47,5 +47,7 @@ public class Produit {
 	@OneToMany(mappedBy = "produit", cascade = CascadeType.ALL)
 	private List<Ligne> lignes = new LinkedList<>();
 
-
+	public int getUnitesEnStock() {
+		return unitesEnStock;
+	}
 }

@@ -32,4 +32,11 @@ public class Ligne {
 	@NonNull
 	private Integer quantite;
 
+	public Produit getProduit() {
+		return produit;
+	}
+
+	public Integer getQuantite() {
+		return quantite;
+	}
 }

@@ -40,5 +40,21 @@ class CommandeServiceTest {
         var commande = service.creerCommande(ID_PETIT_CLIENT);
         assertEquals(VILLE_PETIT_CLIENT, commande.getAdresseLivraison().getVille(),
             "On doit recopier l'adresse du client dans l'adresse de livraison");
-    }   
+    }
+
+    @Test
+    void actualisationStock() {
+        var prod = produit.findById(98).orElseThrow();
+        int stockBefore = prod.getUnitesEnStock();
+        service.enregistreExpédition(99998);
+        prod = produit.findById(98).orElseThrow();
+        assertEquals(stockBefore-20, prod.getUnitesEnStock(), "le stock doit être actualiser avec 20 unités en moins.");
+    }
+
+    @Test
+    void testEnregistrementExpedition() {
+        var c = service.creerCommande(ID_GROS_CLIENT);
+        c = service.enregistreExpédition(c.getNumero());
+        assertEquals(LocalDate.now(), c.getEnvoyeele(), "la date doit être la date actuelle");
+    }
 }

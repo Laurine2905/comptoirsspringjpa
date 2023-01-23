@@ -1,7 +1,11 @@
 package comptoirs.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
+import comptoirs.entity.Ligne;
+import comptoirs.entity.Produit;
+import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
 import comptoirs.dao.ClientRepository;
@@ -18,7 +22,7 @@ public class CommandeService {
 
     // @Autowired
     // La couche "Service" utilise la couche "Accès aux données" pour effectuer les traitements
-    public CommandeService(CommandeRepository commandeDao, ClientRepository clientDao) {
+    public commandeService(CommandeRepository commandeDao, ClientRepository clientDao) {
         this.commandeDao = commandeDao;
         this.clientDao = clientDao;
     }
@@ -63,7 +67,22 @@ public class CommandeService {
      */
     @Transactional
     public Commande enregistreExpédition(Integer commandeNum) {
-        // TODO : implémenter ce service métier
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        @Transactional
+        public Commande enregistreExpédition(Integer commandeNum) {
+            // On vérifie que le client existe
+            var commande = commandeDao.findById(commandeNum).orElseThrow();
+            // On vérifie que la commande n'est pas déjà envoyée
+            if(commande.getEnvoyeele() != null){
+                throw new IllegalArgumentException( " La commande a déjà été envoyé");
+            }
+            // On met a jour la date d'envoie
+            commande.setEnvoyeele( LocalDate.now());
+            // On décrémente la quantité en stock
+            for(Ligne l : commande.getLignes()) {
+                l.getProduit().setUnitesEnStock(l.getProduit().getUnitesEnStock()-l.getQuantite());
+            }
+            return commande;
+        }
+        // A tester : actualisation du stock, enregi
     }
 }
