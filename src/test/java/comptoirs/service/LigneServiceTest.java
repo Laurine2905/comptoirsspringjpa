@@ -37,4 +37,29 @@ class LigneServiceTest {
             () -> service.ajouterLigne(NUMERO_COMMANDE_PAS_LIVREE, REFERENCE_PRODUIT_DISPONIBLE_1, 0),
             "La quantite d'une ligne doit être positive");
     }
+
+    @Test
+    void dejaLivre() {
+        assertThrows(Exception.class,
+                () -> service.ajouterLigne(NUMERO_COMMANDE_DEJA_LIVREE, REFERENCE_PRODUIT_DISPONIBLE_1, 2),
+                "Le produit est déjà livré, on ne peut pas ajouter de ligne");
+
+    }
+
+    @Test
+    void produitPasEnStock() {
+        assertThrows(IllegalArgumentException.class,
+                () -> service.ajouterLigne(NUMERO_COMMANDE_PAS_LIVREE, REFERENCE_PRODUIT_INDISPONIBLE, 1),
+                "Le produit est indisponible");
+    }
+
+    @Test
+    void actualisationNbUniteCommande(){
+        var produit = produitDao.findById(REFERENCE_PRODUIT_DISPONIBLE_2).orElseThrow();
+        var ligne  = service.ajouterLigne(NUMERO_COMMANDE_PAS_LIVREE, REFERENCE_PRODUIT_DISPONIBLE_2, 2);
+        assertEquals(ligne.getProduit().getUnitesCommandees(), produit.getUnitesCommandees()+2);
+
+    }
+
+    // A tester : vérification produit et commande (ok), commande positive (ok déjà implementer), quantité stock suffisante (ok), actualisation nb unité commande (ok)
 }

@@ -83,6 +83,6 @@ public class CommandeService {
             }
             return commande;
         }
-        // A tester : actualisation du stock, enregi
+        // A tester : actualisation du stock, enregistrement de l'expédition, false si la client existe, vérification envoie de commande en doublon
     }
 }
