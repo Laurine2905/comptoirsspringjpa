@@ -13,7 +13,7 @@ import jakarta.validation.ConstraintViolationException;
  // Ce test est basé sur le jeu de données dans "test_data.sql"
 class LigneServiceTest {
     static final int NUMERO_COMMANDE_DEJA_LIVREE = 99999;
-    static final int NUMERO_COMMANDE_PAS_LIVREE  = 99998;
+    static final int NUMERO_COMMANDE_PAS_LIVREE = 99998;
     static final int REFERENCE_PRODUIT_DISPONIBLE_1 = 93;
     static final int REFERENCE_PRODUIT_DISPONIBLE_2 = 94;
     static final int REFERENCE_PRODUIT_DISPONIBLE_3 = 95;
@@ -28,14 +28,14 @@ class LigneServiceTest {
     void onPeutAjouterDesLignesSiPasLivre() {
         var ligne = service.ajouterLigne(NUMERO_COMMANDE_PAS_LIVREE, REFERENCE_PRODUIT_DISPONIBLE_1, 1);
         assertNotNull(ligne.getId(),
-        "La ligne doit être enregistrée, sa clé générée"); 
+                "La ligne doit être enregistrée, sa clé générée");
     }
 
     @Test
     void laQuantiteEstPositive() {
-        assertThrows(ConstraintViolationException.class, 
-            () -> service.ajouterLigne(NUMERO_COMMANDE_PAS_LIVREE, REFERENCE_PRODUIT_DISPONIBLE_1, 0),
-            "La quantite d'une ligne doit être positive");
+        assertThrows(ConstraintViolationException.class,
+                () -> service.ajouterLigne(NUMERO_COMMANDE_PAS_LIVREE, REFERENCE_PRODUIT_DISPONIBLE_1, 0),
+                "La quantite d'une ligne doit être positive");
     }
 
     @Test
@@ -54,12 +54,11 @@ class LigneServiceTest {
     }
 
     @Test
-    void actualisationNbUniteCommande(){
+    void actualisationNbUniteCommande() {
         var produit = produitDao.findById(REFERENCE_PRODUIT_DISPONIBLE_2).orElseThrow();
-        var ligne  = service.ajouterLigne(NUMERO_COMMANDE_PAS_LIVREE, REFERENCE_PRODUIT_DISPONIBLE_2, 2);
-        assertEquals(ligne.getProduit().getUnitesCommandees(), produit.getUnitesCommandees()+2);
+        var ligne = service.ajouterLigne(NUMERO_COMMANDE_PAS_LIVREE, REFERENCE_PRODUIT_DISPONIBLE_2, 2);
+        assertEquals(ligne.getProduit().getUnitesCommandees(), produit.getUnitesCommandees() + 2);
 
     }
 
-    // A tester : vérification produit et commande (ok), commande positive (ok déjà implementer), quantité stock suffisante (ok), actualisation nb unité commande (ok)
 }

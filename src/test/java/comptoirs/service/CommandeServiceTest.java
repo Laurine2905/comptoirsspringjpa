@@ -62,5 +62,4 @@ class CommandeServiceTest {
         assertEquals(LocalDate.now(), c.getEnvoyeele(), "la date doit être la date actuelle");
     }
 
-    // A tester : actualisation du stock ok , enregistrement de l'expédition ok , false si la client existe, vérification envoie de commande en doublon
 }
